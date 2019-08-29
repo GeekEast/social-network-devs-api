@@ -4,8 +4,9 @@
   "description": "Social Network for Developers API",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "server": "nodemon server"
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/server.js",
+    "start": "concurrently npm:start:*"
   },
   "author": "James",
   "license": "MIT",
