@@ -1,3 +1,6 @@
 {
-  
+  "Server": {
+    "USER": "MONGO_USER",
+    "PASSWORD": "MONGO_ACCESS_KEY"
+  }
 }
