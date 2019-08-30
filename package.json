@@ -4,6 +4,7 @@
   "description": "Social Network for Developers API",
   "main": "server.js",
   "scripts": {
+    "test": "jest --passWithNoTests",
     "start:build": "tsc -w",
     "start:run": "nodemon build/server.js",
     "start": "concurrently npm:start:*"
@@ -11,6 +12,7 @@
   "author": "James",
   "license": "MIT",
   "dependencies": {
+    "@types/lodash": "^4.14.138",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.2.2",
@@ -18,15 +20,22 @@
     "express-validator": "^6.1.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "mongoose": "^5.6.11",
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/config": "^0.0.34",
     "@types/express": "^4.17.1",
+    "@types/express-validator": "^3.0.0",
+    "@types/gravatar": "^1.8.0",
+    "@types/jsonwebtoken": "^8.3.3",
+    "@types/mongoose": "^5.5.15",
     "@types/node": "^12.7.2",
     "concurrently": "^4.1.2",
     "husky": "^3.0.4",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"

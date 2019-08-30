@@ -1,19 +1,20 @@
-import express from 'express';
+import express, { json } from 'express';
 import config from 'config';
+import { connectDB } from './services';
+import router from './middlewares/router';
 const app = express();
 const port = config.get('Server.PORT');
 
-app.get('/', (req,res) => {
-  res.status(200).send("Hello Rookie");
-})
+//  connect to mongodb
+connectDB();
 
+// mount necessary middlewars
+app.use(json()); // parse req.body from string to json object
 
+// mount the top level router
+app.use('/api', router);
+
+// start the service
 app.listen(port, () => {
   console.log(`API server starts at port ${port}`);
-})
-
-
-// get the uri for mongodb with username and password
-const username = config.get("Server.USER") as string;
-const access_key = config.get("Server.PASSWORD") as string;
-const uri = (<string>config.get("Server.URI")).replace(/USER/,username).replace(/PASSWORD/,access_key);
+});

@@ -2,5 +2,8 @@
   "Server": {
     "USER": "MONGO_USER",
     "PASSWORD": "MONGO_ACCESS_KEY"
+  },
+  "Auth": {
+    "JWT_SECRET": "JWT_SECRET"
   }
 }
