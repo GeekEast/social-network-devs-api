@@ -67,7 +67,7 @@ const userLogin = async (req: Request, res: Response) => {
       payload,
       secret,
       {
-        expiresIn: 360000
+        expiresIn: '1d'
       },
       (err, token) => {
         if (err) throw err;

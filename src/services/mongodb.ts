@@ -14,7 +14,7 @@ const connectDB = async () => {
     // useCreateIndex for indexing - performance of query
     await connect(
       uri,
-      { useNewUrlParser: true, useCreateIndex: true }
+      { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false }
     );
     console.log('MongoDB connected...');
   } catch (error) {

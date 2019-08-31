@@ -10,7 +10,7 @@ const router = express.Router({ strict: true });
 /**
  * @route GET api/auth
  * @desc  get authenticated user information
- * @access public
+ * @access private
  */
 router.get('/', auth, getUserInfo);
 
