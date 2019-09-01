@@ -6,7 +6,7 @@ const generateRequest = (username: string) => {
   const githubSecret = config.get('Github.SECRET');
 
   return axios.create({
-    baseURL: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClient}&client_secret=1`,
+    baseURL: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClient}&client_secret=${githubSecret}`,
     // baseURL: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClient}&client_secret=${githubSecret}`,
     headers: {
       'user-agent': 'node.js'
@@ -14,4 +14,4 @@ const generateRequest = (username: string) => {
   });
 };
 
-export default generateRequest;
+export { generateRequest };

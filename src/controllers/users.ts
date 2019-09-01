@@ -5,6 +5,7 @@ import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
 import config from 'config';
 import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
 const userRegisterValidator = [
   check('name', 'Name is required')
@@ -16,7 +17,7 @@ const userRegisterValidator = [
   })
 ];
 
-const userLogin = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -82,4 +83,15 @@ const userLogin = async (req: Request, res: Response) => {
   }
 };
 
-export { userRegisterValidator, userLogin };
+const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(_.get(req, ['user', 'id'])).select(
+      '-password'
+    ); // without password
+    res.json({ user }); // default 200
+  } catch (err) {
+    res.status(500).send('Internal Server Error!');
+  }
+};
+
+export { userRegisterValidator, createUser, getUser };

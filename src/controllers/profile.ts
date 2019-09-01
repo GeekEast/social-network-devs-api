@@ -3,8 +3,7 @@ import { Profile, User } from '../models';
 import _ from 'lodash';
 import { check, validationResult } from 'express-validator';
 import moment from 'moment';
-import generateRequest from '../services/github';
-import { renameSync } from 'fs';
+import { generateRequest } from '../services';
 
 const getCurrentUserProfile = async (req: Request, res: Response) => {
   try {

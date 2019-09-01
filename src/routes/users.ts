@@ -1,5 +1,5 @@
 import express from 'express';
-import { userRegisterValidator, userLogin } from '../controllers/users';
+import { userRegisterValidator, createUser } from '../controllers/users';
 const router = express.Router({ strict: true });
 
 /**
@@ -7,6 +7,6 @@ const router = express.Router({ strict: true });
  * @desc register user
  * @access public
  */
-router.post('/', userRegisterValidator, userLogin);
+router.post('/', userRegisterValidator, createUser);
 
 export default router;
