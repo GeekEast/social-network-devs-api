@@ -32,8 +32,8 @@
 
 
 ### Services
-- Github
-- MongoDB
+- **Github**: connect to Oauth Apps of github
+- **MongoDB**: connect to MongoDB
 
 
 ## Questions
