@@ -186,6 +186,7 @@ const createOrUpdateCommentsByID = async (req: Request, res: Response) => {
 const deleteCommentById = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']);
+    const user_id = <string>_.get(req, ['user', 'id']);
     const comment_id = _.get(req, ['params', 'comment_id']);
 
     const post = await Post.findById(post_id);
