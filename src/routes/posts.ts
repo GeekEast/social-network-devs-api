@@ -6,11 +6,11 @@ import {
   getAllPosts,
   getPostById,
   deletePostById,
-  deletePost,
   createOrUpdateLikes,
-  deleteLike,
-  createOrUpdateComments,
-  deleteComment
+  deleteLikeById,
+  commentsValidator,
+  createOrUpdateCommentsByID,
+  deleteCommentById
 } from '../controllers/posts';
 const router = express.Router({ strict: true });
 
@@ -43,38 +43,36 @@ router.get('/:post_id', auth, getPostById);
 router.delete('/:post_id', auth, deletePostById);
 
 /**
- * @route DELETE /api/posts
- * @desc delete a post
+ * @route POST /api/posts/likes/:post_id
+ * @desc like a post
  * @access private
  */
-router.post('/', auth, deletePost);
+router.put('/likes/:post_id', auth, createOrUpdateLikes);
 
 /**
- * @route POST /api/posts/likes
- * @desc add a like to a post
+ * @route DELETE /api/posts/likes/:post_id
+ * @desc unlike a post
  * @access private
  */
-router.put('/likes', auth, createOrUpdateLikes);
+router.delete('/likes/:post_id', auth, deleteLikeById);
 
 /**
- * @route DELETE /api/posts/likes
- * @desc minus a like of a post
- * @access private
- */
-router.delete('/likes', auth, deleteLike);
-
-/**
- * @route POST /api/posts/comments
+ * @route POST /api/posts/comments/:post_id
  * @desc add a comment to a post
  * @access private
  */
-router.put('/comments', auth, createOrUpdateComments);
+router.put(
+  '/comments/:post_id',
+  auth,
+  commentsValidator,
+  createOrUpdateCommentsByID
+);
 
 /**
- * @route DELETE /api/posts/comments
+ * @route DELETE /api/posts/comments/:post_id/:comment_id
  * @desc delete a comment of a post
  * @access private
  */
-router.delete('/likes', auth, deleteComment);
+router.delete('/comments/:post_id/:comment_id', auth, deleteCommentById);
 
 export default router;
