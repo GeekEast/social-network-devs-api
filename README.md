@@ -25,11 +25,10 @@
 - **User**: User Schema and model
 
 ### Routes
-- **Auth**: **Login** and **R** of user
+- **Auth**: **Login** and **R** of `authenticated user`
 - **Post**: **CRUD** post, **UD** of comments and likes
 - **Profile**: **CRUD** profile, **UD** of experiences and educations, **R** of Github Repo
 - **User**: **C** of User
-
 
 ### Services
 - **Github**: connect to Oauth Apps of github

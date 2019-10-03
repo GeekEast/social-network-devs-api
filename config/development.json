@@ -1,6 +1,3 @@
 {
-  "Server": {
-    "PORT": 5000,
-    "URI": "mongodb+srv://USER:PASSWORD@devconnectordb-7cjfr.mongodb.net/test?retryWrites=true&w=majority"
-  }
+  "Server": {}
 }
