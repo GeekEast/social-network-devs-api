@@ -7,7 +7,7 @@
     "test": "jest --passWithNoTests",
     "dev:build": "tsc -w",
     "dev:run": "nodemon build/server.js",
-    "dev": "concurrently dev:start:*",
+    "dev": "concurrently npm:dev:*",
     "build": "tsc -p .",
     "start": "node build/server.js"
   },
