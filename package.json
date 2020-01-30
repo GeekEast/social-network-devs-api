@@ -5,9 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "start:build": "tsc -w",
-    "start:run": "nodemon build/server.js",
-    "start": "concurrently npm:start:*"
+    "dev:build": "tsc -w",
+    "dev:run": "nodemon build/server.js",
+    "dev": "concurrently dev:start:*",
+    "build": "tsc -p .",
+    "start": "node build/server.js"
   },
   "author": "James",
   "license": "MIT",
