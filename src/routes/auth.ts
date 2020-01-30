@@ -1,24 +1,20 @@
-import express from 'express';
-import auth from '../middlewares/auth';
-import {
-  getUserInfo,
-  userLoginValidator,
-  userLogin
-} from '../controllers/auth';
-const router = express.Router({ strict: true });
+import { Router } from 'express';
+import { getUser, loginUser } from '../controllers';
+import { auth, userLoginValidator } from '../middlewares';
+const router = Router({ strict: true });
 
 /**
  * @route GET api/auth
  * @desc  get authenticated user information
  * @access private
  */
-router.get('/', auth, getUserInfo);
+router.get('/', auth, getUser);
 
 /**
  * @route POST api/auth
  * @desc authenticate user
  * @access public
  */
-router.post('/', userLoginValidator, userLogin);
+router.post('/', userLoginValidator, loginUser);
 
 export default router;

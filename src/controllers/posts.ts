@@ -1,15 +1,9 @@
-import { check, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { Request, Response } from 'express';
 import { Post, User } from '../models';
 import _ from 'lodash';
 
-const createNewPostValidator = [
-  check('text', 'Text is required')
-    .not()
-    .isEmpty()
-];
-
-const createNewPost = async (req: Request, res: Response) => {
+export const createPost = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -43,7 +37,7 @@ const createNewPost = async (req: Request, res: Response) => {
   }
 };
 
-const getAllPosts = async (req: Request, res: Response) => {
+export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
     res.json(posts);
@@ -53,7 +47,7 @@ const getAllPosts = async (req: Request, res: Response) => {
   }
 };
 
-const getPostById = async (req: Request, res: Response) => {
+export const getPostById = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']);
     const post = await Post.findById(post_id);
@@ -76,7 +70,7 @@ const getPostById = async (req: Request, res: Response) => {
   }
 };
 
-const deletePostById = async (req: Request, res: Response) => {
+export const deletePostById = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']);
     const post = await Post.findById(post_id);
@@ -96,7 +90,7 @@ const deletePostById = async (req: Request, res: Response) => {
   }
 };
 
-const createOrUpdateLikes = async (req: Request, res: Response) => {
+export const createOrUpdateLikes = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']).toString();
     const user_id = _.get(req, ['user', 'id']).toString();
@@ -121,7 +115,7 @@ const createOrUpdateLikes = async (req: Request, res: Response) => {
   }
 };
 
-const deleteLikeById = async (req: Request, res: Response) => {
+export const deleteLikeById = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']);
     const user_id = _.get(req, ['user', 'id']);
@@ -144,12 +138,10 @@ const deleteLikeById = async (req: Request, res: Response) => {
   }
 };
 
-const commentsValidator = [
-  check('text', 'Content is required.')
-    .not()
-    .isEmpty()
-];
-const createOrUpdateCommentsByID = async (req: Request, res: Response) => {
+export const createOrUpdateCommentsByID = async (
+  req: Request,
+  res: Response
+) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -183,7 +175,7 @@ const createOrUpdateCommentsByID = async (req: Request, res: Response) => {
   }
 };
 
-const deleteCommentById = async (req: Request, res: Response) => {
+export const deleteCommentById = async (req: Request, res: Response) => {
   try {
     const post_id = _.get(req, ['params', 'post_id']);
     const user_id = <string>_.get(req, ['user', 'id']);
@@ -206,17 +198,4 @@ const deleteCommentById = async (req: Request, res: Response) => {
     console.log(err);
     res.status(500).send('Internal Server Error');
   }
-};
-
-export {
-  createNewPostValidator,
-  createNewPost,
-  getAllPosts,
-  getPostById,
-  deleteLikeById,
-  deletePostById,
-  createOrUpdateLikes,
-  commentsValidator,
-  createOrUpdateCommentsByID,
-  deleteCommentById
 };

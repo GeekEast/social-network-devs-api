@@ -1,4 +1,4 @@
-import { check, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { Request, Response } from 'express';
 import { User } from '../models';
 import gravatar from 'gravatar';
@@ -7,17 +7,7 @@ import config from 'config';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 
-const userRegisterValidator = [
-  check('name', 'Name is required')
-    .not()
-    .isEmpty(),
-  check('email', 'Please include your Email Address').isEmail(),
-  check('password', 'Please Enter a pasword more than 6 characters').isLength({
-    min: 6
-  })
-];
-
-const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -83,7 +73,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(_.get(req, ['user', 'id'])).select(
       '-password'
@@ -94,4 +84,60 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export { userRegisterValidator, createUser, getUser };
+export const loginUser = async (req: Request, res: Response) => {
+  // validation failed -> return errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  // validation passed
+  const { password, email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        errors: [
+          {
+            msg: 'Invalid Credentials'
+          }
+        ]
+      });
+    }
+
+    const hash = _.get(user, 'password');
+    const isMatch = await bcrypt.compare(password, hash);
+    if (!isMatch) {
+      return res.status(400).json({
+        errors: [
+          {
+            msg: 'Invalid Credentials'
+          }
+        ]
+      });
+    }
+
+    // status: registered
+    const payload = {
+      user: {
+        id: _.get(user, 'id')
+      }
+    };
+    const secret = <string>config.get('Auth.JWT_SECRET');
+    jwt.sign(
+      payload,
+      secret,
+      {
+        expiresIn: '1d'
+      },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json({ token });
+      }
+    );
+  } catch (err) {
+    res.status(500).send('Internal Server Errors');
+  }
+};

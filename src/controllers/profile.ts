@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { Profile, User } from '../models';
 import _ from 'lodash';
-import { check, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import moment from 'moment';
 import { generateRequest } from '../services';
 
-const getCurrentUserProfile = async (req: Request, res: Response) => {
+export const getProfile = async (req: Request, res: Response) => {
   try {
     const user_id = _.get(req, ['user', 'id']);
     const profile = await Profile.findOne({ user_id }).populate('user_id', [
@@ -23,7 +23,7 @@ const getCurrentUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-const getAllProfiles = async (req: Request, res: Response) => {
+export const getProfiles = async (req: Request, res: Response) => {
   try {
     const profiles = await Profile.find().populate('user_id', [
       'name',
@@ -36,7 +36,7 @@ const getAllProfiles = async (req: Request, res: Response) => {
   }
 };
 
-const getProfileByUserId = async (req: Request, res: Response) => {
+export const getProfileByUserId = async (req: Request, res: Response) => {
   try {
     const user_id = _.get(req, ['params', 'user_id']);
     const profile = await Profile.findOne({ user_id: user_id }).populate(
@@ -55,15 +55,7 @@ const getProfileByUserId = async (req: Request, res: Response) => {
   }
 };
 
-const createProfileValidator = [
-  check('status', 'Status is required')
-    .not()
-    .isEmpty(),
-  check('skills', 'Skills is required')
-    .not()
-    .isEmpty()
-];
-const createUserProfile = async (req: Request, res: Response) => {
+export const createProfile = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -77,7 +69,7 @@ const createUserProfile = async (req: Request, res: Response) => {
       status,
       skills,
       bio,
-      githubusername,
+      githubUsername,
       experience,
       youtube,
       twitter,
@@ -93,7 +85,7 @@ const createUserProfile = async (req: Request, res: Response) => {
     location && _.set(profileObject, 'location', location);
     status && _.set(profileObject, 'status', status);
     bio && _.set(profileObject, 'bio', bio);
-    githubusername && _.set(profileObject, 'githubusername', githubusername);
+    githubUsername && _.set(profileObject, 'githubUsername', githubUsername);
     experience && _.set(profileObject, 'experience', experience);
     skills &&
       _.set(
@@ -136,7 +128,10 @@ const createUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-const deleteProfilUserPostsByUserId = async (req: Request, res: Response) => {
+export const deleteProfileUserPostsByUserId = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const user_id = _.get(req, ['user', 'id']);
     // TODO: - remove user posts
@@ -149,18 +144,7 @@ const deleteProfilUserPostsByUserId = async (req: Request, res: Response) => {
   }
 };
 
-const experienceValidator = [
-  check('title', 'title is required')
-    .not()
-    .isEmpty(),
-  check('company', 'The company is required.')
-    .not()
-    .isEmpty(),
-  check('from', 'The start from date is required.')
-    .not()
-    .isEmpty()
-];
-const createOrUpdateExperience = async (req: Request, res: Response) => {
+export const createOrUpdateExperience = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -204,7 +188,8 @@ const createOrUpdateExperience = async (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error');
   }
 };
-const deleteExperienceById = async (req: Request, res: Response) => {
+
+export const deleteExperienceById = async (req: Request, res: Response) => {
   try {
     // get the user id
     const user_id = _.get(req, ['user', 'id']);
@@ -232,21 +217,8 @@ const deleteExperienceById = async (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error');
   }
 };
-const educationValidator = [
-  check('school', 'School is required')
-    .not()
-    .isEmpty(),
-  check('degree', 'The degree is required.')
-    .not()
-    .isEmpty(),
-  check('fieldofstudy', 'The field of study is required.')
-    .not()
-    .isEmpty(),
-  check('from', 'The start from date is required.')
-    .not()
-    .isEmpty()
-];
-const createOrUpdateEducation = async (req: Request, res: Response) => {
+
+export const createOrUpdateEducation = async (req: Request, res: Response) => {
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -259,7 +231,7 @@ const createOrUpdateEducation = async (req: Request, res: Response) => {
     const {
       school,
       degree,
-      fieldofstudy,
+      fieldOfStudy,
       from,
       to,
       current,
@@ -270,7 +242,7 @@ const createOrUpdateEducation = async (req: Request, res: Response) => {
     const educationObject = {};
     school && _.set(educationObject, 'school', school);
     degree && _.set(educationObject, 'degree', degree);
-    fieldofstudy && _.set(educationObject, 'fieldofstudy', fieldofstudy);
+    fieldOfStudy && _.set(educationObject, 'fieldOfStudy', fieldOfStudy);
     from && _.set(educationObject, 'from', moment(from, 'DD-MM-YYYY').toDate());
     to && _.set(educationObject, 'to', moment(to, 'DD-MM-YYYY').toDate());
     current && _.set(educationObject, 'current', current);
@@ -289,7 +261,8 @@ const createOrUpdateEducation = async (req: Request, res: Response) => {
     res.status(500).send('Internal Server Error');
   }
 };
-const deleteEducationById = async (req: Request, res: Response) => {
+
+export const deleteEducationById = async (req: Request, res: Response) => {
   try {
     // get the user id
     const user_id = _.get(req, ['user', 'id']);
@@ -318,7 +291,7 @@ const deleteEducationById = async (req: Request, res: Response) => {
   }
 };
 
-const getGithubRepoByUsername = async (req: Request, res: Response) => {
+export const getGithubRepoByUsername = async (req: Request, res: Response) => {
   try {
     const username = _.get(req, ['params', 'username']);
     const API = generateRequest(username);
@@ -337,20 +310,4 @@ const getGithubRepoByUsername = async (req: Request, res: Response) => {
     console.log(err);
     res.status(500).send('Internal Server Error');
   }
-};
-
-export {
-  getCurrentUserProfile,
-  getAllProfiles,
-  createProfileValidator,
-  createUserProfile,
-  getProfileByUserId,
-  deleteProfilUserPostsByUserId,
-  experienceValidator,
-  createOrUpdateExperience,
-  deleteExperienceById,
-  educationValidator,
-  createOrUpdateEducation,
-  deleteEducationById,
-  getGithubRepoByUsername
 };

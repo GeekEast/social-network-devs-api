@@ -8,8 +8,7 @@ const uri = (<string>config.get('Server.URI'))
   .replace(/USER/, username)
   .replace(/PASSWORD/, access_key);
 
-// mongodb connector as a function
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
     // useCreateIndex for indexing - performance of query
     await connect(
@@ -22,5 +21,3 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
-
-export { connectDB };

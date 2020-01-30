@@ -1,32 +1,36 @@
-import express from 'express';
-import auth from '../middlewares/auth';
+import { Router } from 'express';
+
 import {
+  auth,
   createNewPostValidator,
-  createNewPost,
-  getAllPosts,
+  commentsValidator
+} from '../middlewares';
+import {
+  createPost,
+  getPosts,
   getPostById,
   deletePostById,
   createOrUpdateLikes,
   deleteLikeById,
-  commentsValidator,
   createOrUpdateCommentsByID,
   deleteCommentById
-} from '../controllers/posts';
-const router = express.Router({ strict: true });
+} from '../controllers';
+
+const router = Router({ strict: true });
 
 /**
  * @route POST /api/posts
  * @desc create a new post
  * @access private
  */
-router.post('/', auth, createNewPostValidator, createNewPost);
+router.post('/', auth, createNewPostValidator, createPost);
 
 /**
  * @route GET /api/posts
  * @desc get all posts
  * @access private
  */
-router.get('/', auth, getAllPosts);
+router.get('/', auth, getPosts);
 
 /**
  * @route GET /api/posts/:post_id

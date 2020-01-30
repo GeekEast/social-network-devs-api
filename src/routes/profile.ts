@@ -1,35 +1,37 @@
-import express from 'express';
+import { Router } from 'express';
 import {
-  createProfileValidator,
-  getCurrentUserProfile,
-  createUserProfile,
-  getAllProfiles,
+  getProfile,
+  createProfile,
+  getProfiles,
   getProfileByUserId,
-  deleteProfilUserPostsByUserId,
-  experienceValidator,
+  deleteProfileUserPostsByUserId,
   createOrUpdateExperience,
   deleteExperienceById,
-  educationValidator,
   createOrUpdateEducation,
   deleteEducationById,
   getGithubRepoByUsername
-} from '../controllers/profile';
-import auth from '../middlewares/auth';
-const router = express.Router({ strict: true });
+} from '../controllers';
+import {
+  auth,
+  educationValidator,
+  experienceValidator,
+  createProfileValidator
+} from '../middlewares';
+const router = Router({ strict: true });
 
 /**
  * @route GET api/profile/me
  * @desc  get current user profile
  * @access private
  */
-router.get('/me', auth, getCurrentUserProfile);
+router.get('/me', auth, getProfile);
 
 /**
  * @route GET api/profile
  * @desc  get all profiles
  * @access public
  */
-router.get('/', getAllProfiles);
+router.get('/', getProfiles);
 
 /**
  * @route GET api/profile/user/:user_id
@@ -43,14 +45,14 @@ router.get('/user/:user_id', getProfileByUserId);
  * @desc  create a user profile
  * @access private
  */
-router.post('/', auth, createProfileValidator, createUserProfile);
+router.post('/', auth, createProfileValidator, createProfile);
 
 /**
  * @route DELETE api/profile
  * @desc delete profile, user & posts
  * @access private
  */
-router.delete('/', auth, deleteProfilUserPostsByUserId);
+router.delete('/', auth, deleteProfileUserPostsByUserId);
 
 /**
  * @route PUT api/profile/experience

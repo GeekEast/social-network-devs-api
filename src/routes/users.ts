@@ -1,6 +1,7 @@
-import express from 'express';
-import { userRegisterValidator, createUser } from '../controllers/users';
-const router = express.Router({ strict: true });
+import { Router } from 'express';
+import { userRegisterValidator } from '../middlewares';
+import { createUser } from '../controllers/users';
+const router = Router({ strict: true });
 
 /**
  * @route POST api/users
