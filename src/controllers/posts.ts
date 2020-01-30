@@ -19,14 +19,14 @@ export const createPost = async (req: Request, res: Response) => {
     const avatar = _.get(user, 'avatar');
 
     // create the post object
-    const postObejct = {};
-    text && _.set(postObejct, 'text', text);
-    name && _.set(postObejct, 'name', name);
-    avatar && _.set(postObejct, 'avatar', avatar);
-    _.set(postObejct, 'user', user_id);
+    const postObject = {};
+    text && _.set(postObject, 'text', text);
+    name && _.set(postObject, 'name', name);
+    avatar && _.set(postObject, 'avatar', avatar);
+    _.set(postObject, 'user', user_id);
 
     // create a object
-    const post = new Post(postObejct);
+    const post = new Post(postObject);
 
     // save to mongoDB
     await post.save();
