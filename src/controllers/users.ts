@@ -125,6 +125,7 @@ export const loginUser = async (req: Request, res: Response) => {
         id: _.get(user, 'id')
       }
     };
+    const name = _.get(user, 'name');
     const secret = <string>config.get('Auth.JWT_SECRET');
     jwt.sign(
       payload,
@@ -134,7 +135,7 @@ export const loginUser = async (req: Request, res: Response) => {
       },
       (err, token) => {
         if (err) throw err;
-        res.status(200).json({ token });
+        res.status(200).json({ token, name });
       }
     );
   } catch (err) {
