@@ -65,11 +65,12 @@ export const createProfile = async (req: Request, res: Response) => {
   try {
     const {
       company,
+      website,
       location,
       status,
       skills,
       bio,
-      githubUsername,
+      githubusername,
       experience,
       youtube,
       twitter,
@@ -78,21 +79,22 @@ export const createProfile = async (req: Request, res: Response) => {
       instagram
     } = req.body;
     const user_id = _.get(req, ['user', 'id']);
-
     const profileObject = {};
     user_id && _.set(profileObject, 'user_id', user_id);
     company && _.set(profileObject, 'company', company);
     location && _.set(profileObject, 'location', location);
     status && _.set(profileObject, 'status', status);
     bio && _.set(profileObject, 'bio', bio);
-    githubUsername && _.set(profileObject, 'githubUsername', githubUsername);
+    githubusername && _.set(profileObject, 'githubusername', githubusername);
     experience && _.set(profileObject, 'experience', experience);
+    website && _.set(profileObject, 'website', website);
     skills &&
       _.set(
         profileObject,
         'skills',
         (<string>skills).split(',').map(skill => skill.trim())
       );
+
     const socialObject = {};
     youtube && _.set(socialObject, 'youtube', youtube);
     twitter && _.set(socialObject, 'twitter', twitter);

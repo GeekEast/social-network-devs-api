@@ -8,6 +8,9 @@ const ProfileSchema = new Schema({
   company: {
     type: String
   },
+  website: {
+    type: String
+  },
   location: {
     type: String
   },
@@ -22,7 +25,7 @@ const ProfileSchema = new Schema({
   bio: {
     type: String
   },
-  githubUsername: {
+  githubusername: {
     type: String
   },
   experience: [
