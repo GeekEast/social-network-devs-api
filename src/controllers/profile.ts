@@ -221,7 +221,6 @@ export const deleteExperienceById = async (req: Request, res: Response) => {
 };
 
 export const createOrUpdateEducation = async (req: Request, res: Response) => {
-  console.log(req.body);
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
