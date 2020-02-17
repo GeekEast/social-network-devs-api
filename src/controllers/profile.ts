@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Profile, User } from '../models';
+import { Profile, User, Post } from '../models';
 import _ from 'lodash';
 import { validationResult } from 'express-validator';
 import moment from 'moment';
@@ -136,7 +136,7 @@ export const deleteProfileUserPostsByUserId = async (
 ) => {
   try {
     const user_id = _.get(req, ['user', 'id']);
-    // TODO: - remove user posts
+    await Post.deleteMany({ user: user_id });
     await Profile.findOneAndRemove({ user_id });
     await User.findOneAndRemove({ _id: user_id });
     res.json({ msg: 'User removed' });
