@@ -28,7 +28,7 @@ export const educationValidator = [
   check('degree', 'The degree is required.')
     .not()
     .isEmpty(),
-  check('fieldOfStudy', 'The field of study is required.')
+  check('fieldofstudy', 'The field of study is required.')
     .not()
     .isEmpty(),
   check('from', 'The start from date is required.')

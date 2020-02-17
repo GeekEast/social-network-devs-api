@@ -112,7 +112,7 @@ export const createProfile = async (req: Request, res: Response) => {
           { $set: profileObject },
           { new: true }
         );
-        // console.log(profile);
+
         return res.json(profile);
       }
 
@@ -221,6 +221,7 @@ export const deleteExperienceById = async (req: Request, res: Response) => {
 };
 
 export const createOrUpdateEducation = async (req: Request, res: Response) => {
+  console.log(req.body);
   // validation failed -> return errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -233,7 +234,7 @@ export const createOrUpdateEducation = async (req: Request, res: Response) => {
     const {
       school,
       degree,
-      fieldOfStudy,
+      fieldofstudy,
       from,
       to,
       current,
@@ -244,7 +245,7 @@ export const createOrUpdateEducation = async (req: Request, res: Response) => {
     const educationObject = {};
     school && _.set(educationObject, 'school', school);
     degree && _.set(educationObject, 'degree', degree);
-    fieldOfStudy && _.set(educationObject, 'fieldOfStudy', fieldOfStudy);
+    fieldofstudy && _.set(educationObject, 'fieldofstudy', fieldofstudy);
     from && _.set(educationObject, 'from', moment(from, 'DD-MM-YYYY').toDate());
     to && _.set(educationObject, 'to', moment(to, 'DD-MM-YYYY').toDate());
     current && _.set(educationObject, 'current', current);
