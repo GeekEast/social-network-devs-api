@@ -32,7 +32,7 @@ export const createUser = async (req: Request, res: Response) => {
     const avatar = gravatar.url(email, {
       s: '200',
       r: 'pg',
-      d: 'mm'
+      d: 'retro'
     });
 
     // bcrypted password
