@@ -87,6 +87,6 @@ router.delete('/education/:education_id', auth, deleteEducationById);
  * @desc get github repos by username
  * @access private
  */
-router.get('/github/:username', auth, getGithubRepoByUsername);
+router.get('/github/:username', getGithubRepoByUsername);
 
 export default router;
